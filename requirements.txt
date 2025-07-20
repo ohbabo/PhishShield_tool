@@ -1,0 +1,25 @@
+ # 웹 프레임워크 & WSGI 서버
+fastapi==0.100.0
+uvicorn[standard]==0.23.2
+Flask==2.3.2
+gunicorn==20.1.0
+
+ # Shodan API 클라이언트
+ shodan==1.25.0
+
+ # SSL 검사
+ sslyze==5.0.0
+
+ # Phishing 검사 (Google Safe Browsifng)
+ google-api-python-client==2.81.0
+ requests==2.31.0
+
+ # OSINT 도구 (필요 시)
+ recon-ng==5.0.1
+ theharvester==3.4.1
+
+ # 환경변수 로딩
+ python-dotenv==1.0.0
+
+ # 설정 파일 파싱
+ PyYAML==6.0
