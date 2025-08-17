@@ -4,6 +4,7 @@ from mitmproxy import http,ctx
 import requests
 import json
 import os
+from utils import create_header
 
 
 #목적 .env api키 불러오기
@@ -18,11 +19,13 @@ env_address = os.path.join(sever_url,".env")
 load_dotenv(env_address)
 
 
+
 #클래스 작성 서버통신
 
 class pishshieldaddon:
     def __init__(self):
         self.counter =0
+        
 
     #proxy-> app으로 url 전달 과정
     def request(self, flow:http.HTTPFlow):
@@ -30,18 +33,20 @@ class pishshieldaddon:
 
         #app으로 보낼 url 받아오기
         web_url = flow.request.pretty_url
-
+        address = 'http://localhost:8000/web_url'
+        #os.getenv에 app_api
         #ctx 로그 표시 -모니터링 하기 위함
         self.counter += 1
         ctx.log.info(f"[{self.counter}] checking_url: {web_url}]")
 
         #app접속
         try:
-            resp = requests.post("http://localhost:8000/web_url",
-                          headers={"auhthorization" : f"bearer {os.getenv("APP_API_KEY")}"},
-                          json={"url":web_url},
-                          timeout=3,
-                          )
+            data = {
+                "url":web_url,
+                "api_key":os.getenv('APP_API_KEY'),
+            }
+        
+            resp = requests.post(address,data=data,timeout=3)
 
             data = resp.json()
 
